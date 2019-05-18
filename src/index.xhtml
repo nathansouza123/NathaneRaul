@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>NT RL</title>
+</h:head>
+<h:body>
+<!-- Adicionando Javascript -->
+
+<script type="text/javascript" >
+    
+    function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            document.getElementById('ibge').value=("");
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('rua').value=(conteudo.logradouro);
+            document.getElementById('bairro').value=(conteudo.bairro);
+            document.getElementById('cidade').value=(conteudo.localidade);
+            document.getElementById('uf').value=(conteudo.uf);
+            document.getElementById('ibge').value=(conteudo.ibge);
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+        
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('rua').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
+                document.getElementById('ibge').value="...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+    };
+
+    </script>
+<!-- Javascript -->
+
+
+	<p:commandButton value="Novo"
+						icon="ui-icon-plus"
+						oncomplete="PF('dgNovo').show()"/>
+						
+	<p:dialog header="Incluir ETEC" modal="true"
+				width="450" height="200"
+				widgetVar="dgTalao" id="dgTalao">
+								
+	<f:facet name="footer">
+	<h:panelGrid columns="2">
+	
+		<h:outputText value="Nome: " />
+		<p:inputText value="#"/>
+	
+		<h:outputText value="Codigo: "/>
+		<p:inputText value="#" />
+	
+		<h:outputText value="CEP: "/>
+		<p:inputMask mask="99999-999" value="#"/>
+	
+		<h:outputText value="Endereço: "/>
+		<p:inputText value="#"/>
+		
+		<h:outputText value="Bairro"/>
+		<p:inputText value="#"/>
+		
+		<h:outputText value="Cidade"/>
+		<p:inputText value="#" />
+	
+	</h:panelGrid>
+	</f:facet>
+	
+	</p:dialog>
+				
+	<h:form>     
+    	<p:growl id="growl" showDetail="true" sticky="true" />  
+       
+    	<p:panel header="Growl">  
+       		<h:panelGrid columns="2" cellpadding="5">  
+        	    <p:outputLabel for="msg" value="Message:" />   
+    	        <p:inputText id="msg" value="#{growlView.message}" required="true" />  
+  	    	 </h:panelGrid>  
+   
+        	<p:commandButton value="Save"   icon="ui-icon-check"  action="#{growlView.saveMessage}" update="@form" />
+        	<p:commandButton value="cancel" icon="ui-icon-circle-close" action="#" update="@form" />
+    	</p:panel>     	
+	</h:form>
+	
+</h:body>
+</html>
