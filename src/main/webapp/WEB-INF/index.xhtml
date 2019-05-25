@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>NT RL</title>
+</h:head>
+<h:body>
+
+	<p:commandButton value="Novo"
+						icon="ui-icon-plus"
+						oncomplete="PF('dgTalao').show()"/>
+						
+	<p:dialog header="Incluir ETEC" modal="true"
+				width="450" height="200"
+				widgetVar="dgTalao" id="dgTalao">
+								
+	<f:facet name="footer">
+	<h:panelGrid columns="2">
+	
+		<h:outputText value="Nome: " />
+		<p:inputText />
+	
+		<h:outputText value="Codigo: "/>
+		<p:inputText />
+	
+		<h:outputText value="CEP: "/>
+		<p:inputMask mask="99999-999"/>
+	
+		<h:outputText value="Endereço: "/>
+		<p:inputText />
+		
+		<h:outputText value="Bairro"/>
+		<p:inputText />
+		
+		<h:outputText value="Cidade"/>
+		<p:inputText />
+	
+	</h:panelGrid>
+	</f:facet>
+	
+	</p:dialog>
+				
+	<h:form>   
+    	<p:growl id="growl" showDetail="true" sticky="true" />  
+       
+    	<p:panel header="Growl">  
+       		<h:panelGrid columns="2" cellpadding="5">  
+        	    <p:outputLabel for="msg" value="Message:" />   
+    	        <p:inputText id="msg" value="#{growlView.message}" required="true" />  
+  	    	 </h:panelGrid>  
+   
+        	<p:commandButton value="Save" action="#{growlView.saveMessage}" update="@form" />
+    	</p:panel>     
+	</h:form>
+	
+</h:body>
+</html>
