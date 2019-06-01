@@ -82,56 +82,81 @@
     };
 
     </script>
-<!-- Javascript-->
+<!--fim do java Javascript-->
 
 
-	<p:commandButton value="Novo"
-						icon="ui-icon-plus"
-						oncomplete="PF('dgNovo').show()"/>
-						
-	<p:dialog header="Incluir ETEC" modal="true"
-				width="450" height="200"
-				widgetVar="dgTalao" id="dgTalao">
-								
-	<f:facet name="footer">
+	<p:growl id="msgs" 
+			 widgetVar="msg" 
+			 showDetail="false" 
+			 autoUpdate="true"
+			 sticky="false" life="7500" />
+	
+	<h:form id="form">
+
+		<p:commandButton value="Novo" 
+						 icon="ui-icon-plus"
+						 oncomplete="PF('dgSave').show()">		
+		</p:commandButton>
+
+	</h:form> 
+
+
+	<p:dialog width="500"
+			  height="190"	
+			  header="Incluir ETEC"
+		      widgetVar="dgSave" 
+		      modal="true"
+		      resizable="false"
+		      showHeader="true">
+		  
+		      
 	<h:panelGrid columns="2">
+
+			<h:outputLabel value="Nome: " />
+			<p:inputText   value="#{CadastroMB" />
+
+			<h:outputLabel value="Código: " />
+			<p:inputText  value="#{CadastroMB"/>
+			
+			<h:outputLabel value="CEP: "/>
+			<p:inputMask onblur="pesquisacep(this.value);"						 
+						 id="cep"
+					     mask="99999-999"
+						 size="10"
+						 value="#{CadastroMB"/>
+			
+			<h:outputLabel value="Endereço: "/>
+			<p:inputText id="rua"  value="#{CadastroMB"/>
+			
+			<h:outputLabel value="Bairroo: "/>
+			<p:inputText id="bairro"  value="#{CadastroMB"/>
+			
+			<h:outputLabel value="Cidade"/>
+			<p:inputText id="cidade" value="#{CadastroMB"/>
+
+		</h:panelGrid>
 	
-		<h:outputText value="Nome: " />
-		<p:inputText value="#"/>
-	
-		<h:outputText value="Codigo: "/>
-		<p:inputText value="#" />
-	
-		<h:outputText value="CEP: "/>
-		<p:inputMask mask="99999-999" value="#"/>
-	
-		<h:outputText value="Endereço: "/>
-		<p:inputText value="#"/>
-		
-		<h:outputText value="Bairro"/>
-		<p:inputText value="#"/>
-		
-		<h:outputText value="Cidade"/>
-		<p:inputText value="#" />
-	
-	</h:panelGrid>
+	<f:facet name="footer">		
+		<p:outputPanel layout="block" 
+					   style="text-align:center">
+					   
+			<p:commandButton value="cadastrar"
+							 icon="ui-icon-check"
+							 actionListener="#"
+							 update=":msgs form"/>
+							 
+			<p:commandButton value="cancelar"
+							 icon="ui-icon-close"
+							 oncomplete="PF('dgSave').hide()"/>
+		</p:outputPanel>
 	</f:facet>
-	
+		
+		
 	</p:dialog>
-				
-	<h:form>     
-    	<p:growl id="growl" showDetail="true" sticky="true" />  
-       
-    	<p:panel header="Growl">  
-       		<h:panelGrid columns="2" cellpadding="5">  
-        	    <p:outputLabel for="msg" value="Message:" />   
-    	        <p:inputText id="msg" value="#{growlView.message}" required="true" />  
-  	    	 </h:panelGrid>  
-   
-        	<p:commandButton value="Save"   icon="ui-icon-check"  action="#{growlView.saveMessage}" update="@form" />
-        	<p:commandButton value="cancel" icon="ui-icon-circle-close" action="#" update="@form" />
-    	</p:panel>     	
-	</h:form>
 	
+
+				  
+				  
+				  
 </h:body>
 </html>

@@ -12,30 +12,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="cadastro")
+@Table(name = "cadastro")
 public class Cadastro {
 
-	
 	@Id
 	@GeneratedValue
-	@Column(name="codigo")
+	@Column(name = "codigo")
 	private int codigo;
-	
-	@Column(name="nome")
+
+	@Column(name = "nome")
 	private String nome;
-	
-	@Column(name="cep")
+
+	@Column(name = "cep")
 	private int cep;
-	
-	@Column(name="endereco")
+
+	@Column(name = "endereco")
 	private String endereco;
-	
-	@Column(name="bairro")	
+
+	@Column(name = "bairro")
 	private String bairro;
-	
-	@Column(name="cidade")
+
+	@Column(name = "cidade")
 	private String cidade;
-	
-	
 
 }

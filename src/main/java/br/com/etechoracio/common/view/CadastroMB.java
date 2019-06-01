@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 @ManagedBean
 public class CadastroMB {
 	
+	//@Managed bean
+	
 	
 	
 
